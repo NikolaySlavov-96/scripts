@@ -20,7 +20,7 @@ else
     exit 1
 fi
 
-CONTAINER_IMAGE="clear-mask:latest"
+CONTAINER_IMAGE="clear-mask"
 
 function run_container() {
     # docker run --rm \
