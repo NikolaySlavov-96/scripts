@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  app:
+    image: ${IMAGE_NAME}
+    env_file:
+      - .env
+    volumes:
+      - ./config.json:/usr/app/config.json
+      - ./Reports:/usr/app/Reports:rw
+      - ./logs.log:/usr/app/logs.log:rw
+      - ./logs.txt:/usr/app/logs.txt:rw
