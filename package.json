@@ -1,0 +1,27 @@
+{
+    "name": "write-and-clear",
+    "version": "0.0.1",
+    "description": "",
+    "main": "remove.js",
+    "type": "module",
+    "scripts": {
+      "start": "node dist/bundle.js",
+      "start:old": "node dist/index.js",
+      "dev": "nodemon ./index.ts",
+      "build:old": "npx tsc"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "mongodb": "^6.11.0"
+    },
+    "devDependencies": {
+      "@types/express": "^5.0.0",
+      "typescript": "^5.7.2"
+    },
+    "engines": {
+      "node": ">=16.0.0"
+    },
+    "ecmascriptVersion": "2022"
+  }
+  

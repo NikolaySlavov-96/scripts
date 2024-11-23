@@ -1,0 +1,21 @@
+{
+    "timestampField": "createdAt",
+    "queryCollection": {
+      "userBrowser": {
+        "userBrowser": {
+          "$ne": ""
+        }
+      },
+      "userIpAddress": {
+        "userIpAddress": {
+          "$ne": ""
+        }
+      },
+      "urlAddress": {
+        "urlAddress": {
+          "$ne": ""
+        }
+      }
+    }
+  }
+  
