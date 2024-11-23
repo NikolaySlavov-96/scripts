@@ -2,7 +2,6 @@
 
 # Get from env file address and collection
 set -a
-echo "$PATH"
 source .env
 set +a
 
