@@ -18,9 +18,9 @@ const fetchAndDeleteDocuments = async (dataBase, collectionName, dateString) => 
 
     const queryResult = await collection.find(query).toArray();
     // const deletedRows = await collection.deleteMany(query);
-    const deletedRows = { deletedRows: 4 };
-
-    return { foundRecordsCount: queryResult.length, removedRecordsCount: deletedRows.deletedCount };
+    const deletedRows = { deletedRows: undefined };
+    
+    return { foundRecordsCount: queryResult.length ?? 0, removedRecordsCount: deletedRows.deletedCount ?? 0 };
 };
 
 const logData = (content) => {
@@ -42,7 +42,7 @@ const connection = async (address, dbName, collectionName, dateString) => {
 
         // Write log
         const reportInitialDate = new Date().toISOString();
-        const reportData = `${reportInitialDate} - Found ${foundRecordsCount ?? 0} records in the ${collectionName ?? 0} collection; removed ${removedRecordsCount} records base on specified criteria.\n`
+        const reportData = `${reportInitialDate} - Found ${foundRecordsCount} records in the ${collectionName} collection; removed ${removedRecordsCount} records base on specified criteria.\n`
         logData(reportData);
 
         // Listen
