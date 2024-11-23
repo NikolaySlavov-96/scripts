@@ -9,12 +9,7 @@ if [ -z "$UP_CONTAINER" ]; then
     exist 1
 fi
 
-DIRECTORY_NAME="Reports"
-if [ -d "$DIRECTORY_NAME" ]; then
-    echo "Directory $DIRECTORY_NAME exist"
-else
-    mkdir "$DIRECTORY_NAME"
-fi
+./createLogDirs.sh
 
 # Send email notification
 FILE_NAME=".env"
