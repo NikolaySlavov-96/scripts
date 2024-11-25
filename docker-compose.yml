@@ -8,5 +8,5 @@ services:
     volumes:
       - ./config.json:/usr/app/config.json
       - ./Reports:/usr/app/Reports:rw
-      - ./logs.log:/usr/app/logs.log:rw
-      - ./logs.txt:/usr/app/logs.txt:rw
+      - ./logs.log:/usr/app/logs.log
+      - ./logs.txt:/usr/app/logs.txt
