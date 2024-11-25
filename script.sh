@@ -5,16 +5,14 @@ set -a
 source .env
 set +a
 
-LOG_FILE="logs.log"
-
-log_message() {
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >>"$LOG_FILE"
-}
+source ./logger.sh
 
 FIELDS_ARR=("userBrowser" "urlAddress" "userIpAddress")
 
 for field in "${FIELDS_ARR[@]}"; do
+    log_message "Start on uniqueRecordReportGenerator"
     node uniqueRecordReportGenerator.js "$DATABASE_URL" "$DATABASE_NAME" "$COLLECTION_NAME" "$field"
+    log_message "Final on uniqueRecordReportGenerator"
 
     NODE_EXIT_CODE="$?"
     echo "$NODE_EXIT_CODE"
@@ -32,6 +30,7 @@ done
 yesterday_timestamp=$(($(date +%s) - 86400))
 yesterday=$(date -u -I -d @$yesterday_timestamp)
 
+log_message "Start on dateBasedRecordRemover"
 node dateBasedRecordRemover.js "$DATABASE_URL" "$DATABASE_NAME" "$COLLECTION_NAME" "$yesterday"
-
+log_message "Final on dateBasedRecordRemover"
 # node my_script.js --env="$MY_VAR"

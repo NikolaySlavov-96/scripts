@@ -10,6 +10,7 @@ COPY . .
 
 # RUN npm run build
 
+RUN chmod +x /usr/app/logger.sh
 RUN chmod +x /usr/app/script.sh
 
 CMD ["bash", "/usr/app/script.sh"]

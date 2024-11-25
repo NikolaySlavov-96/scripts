@@ -1,22 +1,24 @@
 #!/bin/bash
 
-# Send email notification
+# Create file and directories
+./createLogDirs.sh
+
+source ./logger.sh
+
 UP_CONTAINER=$(docker ps | grep mongo)
 # Exit if no MongoDB container is running
 if [ -z "$UP_CONTAINER" ]; then
-    echo "$UP_CONTAINER"
-    # Mongo container is not exit
+    # also email notification
+    log_message "Mongo container is not exit $UP_CONTAINER"
     exist 1
 fi
 
-./createLogDirs.sh
-
-# Send email notification
 FILE_NAME=".env"
 if [ -f "$FILE_NAME" ]; then
     echo "File: $FILE_NAME exist"
 else
-    # .env file is not exist
+    log_message ".env file is not exist"
+    # also email notification
     exit 1
 fi
 
@@ -35,12 +37,15 @@ function run_container() {
 VALIDATED_IMAGE=$(docker images | grep "$CONTAINER_IMAGE")
 # CONTAINER_IMAGE container is running
 if [ -n "$VALIDATED_IMAGE" ]; then
-    docker build -t "$CONTAINER_IMAGE" .
+    log_message "Run -> $CONTAINER_IMAGE"
     run_container
 else
+    log_message "Start build or pull on $CONTAINER_IMAGE"
     docker build -t "$CONTAINER_IMAGE" .
     # OR
     # docker pull "$VALIDATED_IMAGE"
+
+    log_message "Run after build $CONTAINER_IMAGE"
     run_container
 fi
 
