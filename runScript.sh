@@ -49,5 +49,9 @@ else
     run_container
 fi
 
+REPORT_FOLDER="Reports"
 date=$(date +"%Y-%m-%dT%H:%M:%SZ")
-tar -czvf "reports-$date.tar.gz" ./Reports
+tar -czvf "reports-$date.tar.gz" ./$REPORT_FOLDER
+
+sleep 5s
+rm -rf $REPORT_FOLDER
