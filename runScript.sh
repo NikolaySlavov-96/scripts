@@ -49,4 +49,5 @@ else
     run_container
 fi
 
-# docker run --name your-container-name -p 3000:3000 -e NODE_ENV=production your-image-name
+date=$(date +"%Y-%m-%dT%H:%M:%SZ")
+tar -czvf "reports-$date.tar.gz" ./Reports
