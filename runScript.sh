@@ -4,21 +4,28 @@
 ./createLogDirs.sh
 
 source ./logger.sh
+source ./email.sh
+
+recipient=nikolay.slavov.96@gmail.com
 
 UP_CONTAINER=$(docker ps | grep mongo)
 # Exit if no MongoDB container is running
 if [ -z "$UP_CONTAINER" ]; then
-    # also email notification
-    log_message "Mongo container is not exit $UP_CONTAINER"
-    exist 1
+    message="Mongo container is not exit $UP_CONTAINER"
+
+    log_message "$message"
+    send_email "$recipient" "$message" "Alert"
+    exit 1
 fi
 
 FILE_NAME=".env"
 if [ -f "$FILE_NAME" ]; then
     echo "File: $FILE_NAME exist"
 else
-    log_message ".env file is not exist"
-    # also email notification
+    message="$FILE_NAME file is not exist"
+
+    log_message "$message"
+    send_email "$recipient" "$message" "Alert"
     exit 1
 fi
 
@@ -52,6 +59,8 @@ fi
 REPORT_FOLDER="Reports"
 date=$(date +"%Y-%m-%dT%H:%M:%SZ")
 tar -czvf "reports-$date.tar.gz" ./$REPORT_FOLDER
+
+send_email $recipient "Successfully finish script"
 
 sleep 5s
 rm -rf $REPORT_FOLDER
