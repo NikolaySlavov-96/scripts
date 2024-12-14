@@ -58,9 +58,14 @@ fi
 
 send_email $recipient "Successfully finish script"
 
-# REPORT_FOLDER="Reports"
-# date=$(date +"%Y-%m-%dT%H:%M:%SZ")
-# tar -czvf "reports-$date.tar.gz" ./$REPORT_FOLDER
+REPORT_FOLDER="Reports"
+date=$(date +"%Y-%m-%dT%H:%M:%SZ")
+
+REPORT_NAME="reports-$date.tar.gz"
+
+tar -czvf "$REPORT_NAME" ./$REPORT_FOLDER
+
+echo "This is archive with Reports" | mutt -e "set realname='Reports'" -s "Final result from reports" -a ./"$REPORT_NAME" -- nikolay.slavov.96@gmail.com
 
 sleep 5s
 
