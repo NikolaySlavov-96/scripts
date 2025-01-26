@@ -5,7 +5,7 @@ Choose a location and clone the repo.
 Enter the created directory and execute the following commands( they grand execution right to the script without administrative privilege ).
 
 chmod +x logger.sh
-chmod +x runScript.sh
+chmod +x runContainerAndGenerateReport.sh
 chmod +x script.sh
 chmod +x createLogDirs.sh
 
