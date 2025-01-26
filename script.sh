@@ -7,20 +7,29 @@ set +a
 
 source ./logger.sh
 
-FIELDS_ARR=("userBrowser" "urlAddress" "userIpAddress")
+CONFIG_JSON="config.json"
 
-for field in "${FIELDS_ARR[@]}"; do
-    log_message "Start on uniqueRecordReportGenerator"
-    node uniqueRecordReportGenerator.js "$DATABASE_URL" "$DATABASE_NAME" "$COLLECTION_NAME" "$field"
-    log_message "Final on uniqueRecordReportGenerator"
+COLLECTIONS_NAMES=$(jq -r '.collectionsNames[]' "$CONFIG_JSON")
 
-    NODE_EXIT_CODE="$?"
-    echo "$NODE_EXIT_CODE"
+# FIELDS_ARG=("userBrowser" "urlAddress" "userIpAddress")
 
-    if [ "$NODE_EXIT_CODE" -ne 0 ]; then
-        log_message "You have a problem with script $field!"
-        exit 1
-    fi
+for collection in $COLLECTIONS_NAMES; do
+    collectionFieldName=$(jq -r --arg col "$collection" '.collectionsFields[$col][]' "$CONFIG_JSON")
+
+    for field in $collectionFieldName; do
+        echo "'COLLECTIONS_NAMES' --$field"
+        log_message "Start on uniqueRecordReportGenerator"
+        node uniqueRecordReportGenerator.js "$DATABASE_URL" "$DATABASE_NAME" "$collection" "$field"
+        log_message "Final on uniqueRecordReportGenerator"
+
+        NODE_EXIT_CODE="$?"
+        echo "$NODE_EXIT_CODE"
+
+        if [ "$NODE_EXIT_CODE" -ne 0 ]; then
+            log_message "You have a problem with script $field!"
+            exit 1
+        fi
+    done
 done
 
 # This solution is designed to work on other Linux systems.
@@ -31,6 +40,10 @@ yesterday_timestamp=$(($(date +%s) - 86400))
 yesterday=$(date -u -I -d @$yesterday_timestamp)
 
 log_message "Start on dateBasedRecordRemover"
-node dateBasedRecordRemover.js "$DATABASE_URL" "$DATABASE_NAME" "$COLLECTION_NAME" "$yesterday"
+
+for collection in $COLLECTIONS_NAMES; do
+    node dateBasedRecordRemover.js "$DATABASE_URL" "$DATABASE_NAME" "$collection" "$yesterday"
+done
+
 log_message "Final on dateBasedRecordRemover"
 # node my_script.js --env="$MY_VAR"
