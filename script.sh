@@ -17,7 +17,6 @@ for collection in $COLLECTIONS_NAMES; do
     collectionFieldName=$(jq -r --arg col "$collection" '.collectionsFields[$col][]' "$CONFIG_JSON")
 
     for field in $collectionFieldName; do
-        echo "'COLLECTIONS_NAMES' --$field"
         log_message "Start on uniqueRecordReportGenerator"
         node uniqueRecordReportGenerator.js "$DATABASE_URL" "$DATABASE_NAME" "$collection" "$field"
         log_message "Final on uniqueRecordReportGenerator"
