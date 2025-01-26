@@ -11,7 +11,7 @@ const queryCollection = config.queryCollection;
 // const env = process.env.NAME;
 const args = process.argv.slice(2);
 
-const addressArd = args[0];
+const addressArg = args[0];
 const dbNameArg = args[1];
 const collectionNameArg = args[2];
 const fieldArg = args[3];
@@ -136,4 +136,4 @@ const connection = async (address, dbName, collectionName, field) => {
     }
 }
 
-connection(addressArd, dbNameArg, collectionNameArg, fieldArg);
+connection(addressArg, dbNameArg, collectionNameArg, fieldArg);
