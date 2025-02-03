@@ -17,8 +17,7 @@ const fetchAndDeleteDocuments = async (dataBase, collectionName, dateString) => 
     const query = { createdAt: { '$lt': date, }, };
 
     const queryResult = await collection.find(query).toArray();
-    // const deletedRows = await collection.deleteMany(query);
-    const deletedRows = { deletedRows: undefined };
+    const deletedRows = await collection.deleteMany(query);
     
     return { foundRecordsCount: queryResult.length ?? 0, removedRecordsCount: deletedRows.deletedCount ?? 0 };
 };
