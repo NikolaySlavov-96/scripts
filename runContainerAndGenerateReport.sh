@@ -58,6 +58,8 @@ fi
 
 send_email $RECIPIENT_ADDRESS "Successfully finish script notification"
 
+echo "This is a Log files" | mutt -e "set realname='Logs'" -s "Successfully finish script -> Log files" -a ./logs.log ./logs.txt -- "$RECIPIENT_ADDRESS"
+
 date=$(date +"%Y-%m-%dT%H:%M:%SZ")
 
 REPORT_FOLDER="Reports"
