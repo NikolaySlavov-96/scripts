@@ -6,7 +6,7 @@
 source ./logger.sh
 source ./email.sh
 
-recipient=nikolay.slavov.96@gmail.com
+RECIPIENT_ADDRESS=nikolay.slavov.96@gmail.com
 
 UP_CONTAINER=$(docker ps | grep mongo)
 # Exit if no MongoDB container is running
@@ -14,7 +14,7 @@ if [ -z "$UP_CONTAINER" ]; then
     message="Mongo container is not exit $UP_CONTAINER"
 
     log_message "$message"
-    send_email "$recipient" "$message" "Alert"
+    send_email "$RECIPIENT_ADDRESS" "$message" "Alert"
     exit 1
 fi
 
@@ -25,7 +25,7 @@ else
     message="$FILE_NAME file is not exist"
 
     log_message "$message"
-    send_email "$recipient" "$message" "Alert"
+    send_email "$RECIPIENT_ADDRESS" "$message" "Alert"
     exit 1
 fi
 
@@ -56,16 +56,18 @@ else
     run_container
 fi
 
-send_email $recipient "Successfully finish script"
+send_email $RECIPIENT_ADDRESS "Successfully finish script notification"
+
+date=$(date +"%Y-%m-%dT%H:%M:%SZ")
 
 REPORT_FOLDER="Reports"
-date=$(date +"%Y-%m-%dT%H:%M:%SZ")
 
 REPORT_NAME="reports-$date.tar.gz"
 
 tar -czvf "$REPORT_NAME" ./$REPORT_FOLDER
 
-echo "This is archive with Reports" | mutt -e "set realname='Reports'" -s "Final result from reports" -a ./"$REPORT_NAME" -- nikolay.slavov.96@gmail.com
+echo "This is archive with Reports" | mutt -e "set realname='Reports'" -s "Final result from reports" -a ./"$REPORT_NAME" -- "$RECIPIENT_ADDRESS"
+# echo "This is archive with Reports" | mutt -e "set realname='Reports'" -s "Final result from reports" -a ./"$REPORT_NAME" -- nikolay.slavov.96@gmail.com
 
 sleep 5s
 
