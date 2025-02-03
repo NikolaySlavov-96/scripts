@@ -11,7 +11,7 @@ CONFIG_JSON="config.json"
 
 COLLECTIONS_NAMES=$(jq -r '.collectionsNames[]' "$CONFIG_JSON")
 
-# FIELDS_ARG=("userBrowser" "urlAddress" "userIpAddress")
+# FIELDS_ARG_ARR=("userBrowser" "urlAddress" "userIpAddress")
 
 for collection in $COLLECTIONS_NAMES; do
     collectionFieldName=$(jq -r --arg col "$collection" '.collectionsFields[$col][]' "$CONFIG_JSON")
