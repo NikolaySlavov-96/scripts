@@ -1,0 +1,36 @@
+{
+  "collectionsNames": ["homedatas", "devicedatas", "useraddressdatas"],
+  "collectionsFields": {
+    "homedatas": ["userBrowser", "urlAddress", "userIpAddress"],
+    "devicedatas": ["userAddress"],
+    "useraddressdatas": ["IPv4"]
+  },
+  "timestampField": "createdAt",
+  "queryCollection": {
+    "userBrowser": {
+      "userBrowser": {
+        "$ne": ""
+      }
+    },
+    "userIpAddress": {
+      "userIpAddress": {
+        "$ne": ""
+      }
+    },
+    "urlAddress": {
+      "urlAddress": {
+        "$ne": ""
+      }
+    },
+    "userAddress": {
+      "userAddress": {
+        "$ne": ""
+      }
+    },
+    "IPv4": {
+      "IPv4": {
+        "$ne": ""
+      }
+    }
+  }
+}

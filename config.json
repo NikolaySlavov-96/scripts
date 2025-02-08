@@ -1,35 +1,48 @@
 {
-  "collectionsNames": ["homedatas", "devicedatas", "useraddressdatas"],
+  "collectionsNames": ["server-apps"],
   "collectionsFields": {
-    "homedatas": ["userBrowser", "urlAddress", "userIpAddress"],
-    "devicedatas": ["userAddress"],
-    "useraddressdatas": ["IPv4"]
+    "server-apps": ["body", "url", "ipReal", "ipAddress", "browser", "port", "server", "referer"]
   },
   "timestampField": "createdAt",
   "queryCollection": {
-    "userBrowser": {
-      "userBrowser": {
+    "body": {
+      "body": {
+        "$ne": "{}"
+      }
+    },
+    "url": {
+      "url": {
+        "$ne": "/"
+      }
+    },
+    "ipReal": {
+      "ipReal": {
         "$ne": ""
       }
     },
-    "userIpAddress": {
-      "userIpAddress": {
+    "ipAddress": {
+      "url": {
         "$ne": ""
       }
     },
-    "urlAddress": {
-      "urlAddress": {
-        "$ne": ""
+    "browser": {
+      "browser": {
+        "$ne": "/"
       }
     },
-    "userAddress": {
-      "userAddress": {
-        "$ne": ""
+    "port": {
+      "port": {
+        "$ne": "/"
       }
     },
-    "IPv4": {
-      "IPv4": {
-        "$ne": ""
+    "server": {
+      "server": {
+        "$ne": "/"
+      }
+    },
+    "referer": {
+      "referer": {
+        "$ne": "/"
       }
     }
   }
