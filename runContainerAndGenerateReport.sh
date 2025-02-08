@@ -56,6 +56,8 @@ else
     run_container
 fi
 
+sleep 10s
+
 send_email $RECIPIENT_ADDRESS "Successfully finish script notification"
 
 echo "This is a Log files" | mutt -e "set realname='Logs'" -s "Successfully finish script -> Log files" -a ./logs.log ./logs.txt -- "$RECIPIENT_ADDRESS"
@@ -68,9 +70,8 @@ REPORT_NAME="reports-$date.tar.gz"
 
 tar -czvf "$REPORT_NAME" ./$REPORT_FOLDER
 
-echo "This is archive with Reports" | mutt -e "set realname='Reports'" -s "Final result from reports" -a ./"$REPORT_NAME" -- "$RECIPIENT_ADDRESS"
-# echo "This is archive with Reports" | mutt -e "set realname='Reports'" -s "Final result from reports" -a ./"$REPORT_NAME" -- nikolay.slavov.96@gmail.com
+echo "This is archive with Reports for date: $date" | mutt -e "set realname='Reports'" -s "Final result from reports" -a ./"$REPORT_NAME" -- "$RECIPIENT_ADDRESS"
 
 sleep 5s
 
-# rm -rf $REPORT_FOLDER
+rm -rf $REPORT_FOLDER
