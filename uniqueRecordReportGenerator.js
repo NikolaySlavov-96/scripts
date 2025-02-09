@@ -100,16 +100,15 @@ const connection = async (address, dbName, collectionName, field) => {
 
         // Write Report in System
         const hasValidReportData = result?.uniqueData && result.uniqueData[0] !== 'undefined';
-        const fieldCollectionKey = field + ' ' + collectionName;
+        const fieldCollectionKey = `collection: ${collectionName} field: ${field}`;
         hasValidReportData && await generateReport(result?.uniqueData, fieldCollectionKey, reportDateRange);
 
         // Write log
         const reportInitialDate = new Date().toISOString();
-        const reportStatusMessage = hasValidReportData ? '- Success create report for' : '- No data to record from'
-        const reportData = hasValidReportData ?
-            `${reportInitialDate} ${reportStatusMessage} ${fieldCollectionKey}\n`
-            :
-            `${reportInitialDate} ${reportStatusMessage} ${fieldCollectionKey}\n`
+
+        const reportStatusMessage = hasValidReportData ? '- Success create report for' : '- No data to record from';
+        const reportData = `${reportInitialDate} ${reportStatusMessage} ${fieldCollectionKey}\n`;
+
         logData(reportData);
 
         // Listen
