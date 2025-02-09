@@ -17,9 +17,11 @@ for collection in $COLLECTIONS_NAMES; do
     collectionFieldName=$(jq -r --arg col "$collection" '.collectionsFields[$col][]' "$CONFIG_JSON")
 
     for field in $collectionFieldName; do
-        log_message "Start on uniqueRecordReportGenerator"
+        LOG_PREFIX="collection - $collection / field - $field"
+
+        log_message "Start on uniqueRecordReportGenerator: $LOG_PREFIX"
         node uniqueRecordReportGenerator.js "$DATABASE_URL" "$DATABASE_NAME" "$collection" "$field"
-        log_message "Final on uniqueRecordReportGenerator"
+        log_message "Final on uniqueRecordReportGenerator: $LOG_PREFIX"
 
         NODE_EXIT_CODE="$?"
         echo "$NODE_EXIT_CODE"
