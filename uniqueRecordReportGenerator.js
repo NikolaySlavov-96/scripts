@@ -28,7 +28,7 @@ const fetchUniqueParams = async (dataBase, collectionName, field) => {
 
     result.map(el => {
         const param = el[field];
-        if (!temporaryStore.includes(param)) {
+        if (param !== undefined && !temporaryStore.includes(param)) {
             temporaryStore.push(param);
         };
 
